@@ -1,0 +1,15 @@
+{
+    "name": "vendor/photo-mariage",
+    "description": "Description of project PhotoMariage.",
+    "authors": [
+        {
+            "name": "Raphiki",
+            "email": "your@email.here"
+        }
+    ],
+    "require": {
+        "silex/silex": "v1.2.2",
+        "twig/twig": "v1.16.2",
+        "monolog/monolog": "1.11.0"
+    }
+}
