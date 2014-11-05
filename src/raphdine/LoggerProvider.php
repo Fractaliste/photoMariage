@@ -15,7 +15,7 @@ class LoggerProvider extends MonologServiceProvider {
     public function register(Application $app) {
         parent::register($app);
 
-        $app['monolog.logfile'] = __DIR__ . '\\..\\temp\\log\\raphdine.log';
+        $app['monolog.logfile'] = __DIR__ . '/../temp/log/raphdine.log';
     }
 
 }
