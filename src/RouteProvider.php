@@ -24,6 +24,4 @@ class RouteProvider implements ServiceProviderInterface {
     public function boot(Application $app) {
         
     }
-
-//put your code here
 }

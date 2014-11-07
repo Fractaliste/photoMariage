@@ -13,8 +13,8 @@
         "monolog/monolog": "1.11.0"
     },
     "autoload": {
-        "psr-0": {
-            "Raphdine": "src/"
+        "psr-4": {
+            "Raphdine\\": "src/"
         }
     }
 }
