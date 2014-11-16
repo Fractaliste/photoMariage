@@ -14,7 +14,8 @@ $app['debug'] = function() use ($app) {
     return $app['request_context']->getHost() === 'localhost';
 };
 
-$app['photo.dir']= __DIR__.'/img/mariage/';
+$app['photo.dir'] = __DIR__ . '/img/mariage/';
+$app['photo.password'] = '06122014';
 
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/../src/vues',

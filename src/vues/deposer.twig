@@ -3,8 +3,12 @@
 {% block content %}
     <div>
         <form method="POST" enctype="multipart/form-data">
-            <input type="input" value="" name="folder" required>
-            <input type="file" name="photos[]" accept="image/*" required multiple>
+            <label>Entrez ici le nom de votre album photo (votre prénom) dans lequel seront stockées vos photos<input type="input" value="" name="folder" required></label>
+            <br/>
+            <label>Sélectionnez ici vos photos :<input type="file" name="photos[]" accept="image/*" required multiple></label>
+            <br/>
+            <em>Merci de ne pas envoyer plus de 5 photos à la fois.</em>
+            <br/>
             <input type="submit" value="Envoyer les photos">
         </form>
         {{img}}

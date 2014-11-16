@@ -5,6 +5,7 @@ namespace Raphdine;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Description of RouteProvider
@@ -15,24 +16,7 @@ class RouteProvider implements ServiceProviderInterface {
 
     public function register(Application $app) {
 
-        $app->before(function (Request $request, Application $app) {
-            if ($request->getRequestUri() !== '/login' && $app['session']->get('password') !== 'ok') {
-                return $app->redirect('/login');
-            }
-        });
-
-        $app->get('/login', function () use ($app) {
-            return $app['twig']->render('password.twig');
-        });
-
-        $app->post('/login', function (Request $request) use ($app) {
-            if ($request->get('password') === '06122014') {
-                $app['session']->set('password', 'ok');
-                return $app->redirect('/');
-            } else {
-                return $app->redirect('/login');
-            }
-        });
+        $this->registerLoginAction($app);
 
         $app->get('/', function (Request $request) use ($app) {
             return $app['twig']->render('home.twig');
@@ -79,6 +63,47 @@ class RouteProvider implements ServiceProviderInterface {
                 }
                 $photo->move($dir, $fileName . strtolower($matches[2]));
             }
+        });
+    }
+
+    public function registerLoginAction(Application $app) {
+        $app->before(function (Request $request, Application $app) {
+            if ($app['session']->has('last_try')) {
+                if (time() - $app['session']->has('last_try') < 15 * 60) {
+                    $subRequest = Request::create('/login/erreur', 'GET');
+                    return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+                } else {
+                    $app['session']->clear();
+                }
+            }
+
+            if (!in_array($request->getRequestUri(), ['/login', '/login/erreur']) && $app['session']->get('password') !== 'ok') {
+                return $app->redirect('/login');
+            }
+        });
+
+        $app->get('/login', function () use ($app) {
+            return $app['twig']->render('password.twig');
+        });
+
+        $app->post('/login', function (Request $request) use ($app) {
+            if ($request->get('password') === $app['photo.password']) {
+                $app['session']->set('password', 'ok');
+                return $app->redirect('/');
+            } else {
+                if ($app['session']->has('nombre_essai') && $app['session']->get('nombre_essai') > 3) {
+                    $app['session']->set('last_try', time());
+                    $subRequest = Request::create('/login/erreur', 'GET');
+                    return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+                } else {
+                    $app['session']->set('nombre_essai', $app['session']->get('nombre_essai') + 1);
+                }
+                return $app->redirect('/login');
+            }
+        });
+
+        $app->get('/login/erreur', function () use ($app) {
+            return $app['twig']->render('to_many_try.twig');
         });
     }
 

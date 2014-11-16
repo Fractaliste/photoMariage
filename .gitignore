@@ -1,3 +1,4 @@
-/vendor
-/web/img/mariage/*
-/src/temp/log/*
+vendor
+web/img/mariage/*
+*.log
+composer.phar
