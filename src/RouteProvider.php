@@ -69,7 +69,7 @@ class RouteProvider implements ServiceProviderInterface {
     public function registerLoginAction(Application $app) {
         $app->before(function (Request $request, Application $app) {
             if ($app['session']->has('last_try')) {
-                if (time() - $app['session']->has('last_try') < 15 * 60) {
+                if (time() - $app['session']->get('last_try') < 15 * 60) {
                     $subRequest = Request::create('/login/erreur', 'GET');
                     return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
                 } else {
