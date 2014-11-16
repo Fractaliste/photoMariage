@@ -1,0 +1,195 @@
+/* 
+    Created on : 7 nov. 2014, 20:56:12
+    Author     : Raphiki
+*/
+
+@font-face {
+    font-family: "Courrier Prime";
+    src: url('/css/font/Courier_Prime.ttf');
+}
+@font-face {
+    font-family: "Courrier Prime";
+    font-style: italic;
+    src: url('/css/font/Courier_Prime_Italic.ttf');
+}
+@font-face {
+    font-family: "Courrier Prime";
+    font-weight: bold;
+    src: url('/css/font/Courier_Prime_Bold.ttf');
+}
+@font-face {
+    font-family: "Courrier Prime";
+    font-style: italic;
+    font-weight: bold;
+    src: url('/css/font/Courier_Prime_Bold_Italic.ttf');
+}
+
+body {
+    font-family: "Courrier Prime", Helvetica, Arial, sans-serif;
+    background-color: cornsilk;
+}
+
+a{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+}
+
+body > section {
+    max-width: 900px;
+    margin:auto;
+    /*box-shadow: 1px 1px 1px red ;*/
+
+}
+
+.menu {
+    margin-top: 60px;
+        padding-top: 130px;
+    position: relative;
+    text-align: center;
+}
+
+.b {
+    position: absolute;
+}
+
+/****** FIRST CREATE THE BUBBLE *****/
+.bubble {
+    position:relative; /*see the support section below for more info*/
+    width:auto; /*size of the bubble*/
+    padding:20px 40px;
+    margin:10px 10px 80px 40px;
+    /**give the corners a large curve**/
+    -webkit-border-radius:180px;
+    -moz-border-radius:180px;
+    border-radius:180px;
+    /**add a drop shadow to the bubble**/
+    -webkit-box-shadow: -3px 4px 8px #989898;
+    -moz-box-shadow: -3px 4px 8px #989898;
+    box-shadow: -3px 4px 8px #989898;
+    /**style the text**/
+    color:#575544;
+    font-size:1em;
+    letter-spacing:.06em;
+    cursor: pointer;
+}
+/******NOW CREATE THE THOUGHT CIRCLES*****/
+/****FIRST THE LARGE CIRCLE***/
+.bubble:before {
+    content:"";
+    position:absolute; /*see the support section below for more info*/
+    width:30px; /*same as the height*/
+    height:30px; /*same as the width*/
+    /*add a curve to the corners the same size as the height and width*/
+    -webkit-border-radius:30px;
+    -moz-border-radius:30px;
+    border-radius:30px;
+    /*add a drop shadow*/
+    -webkit-box-shadow: -3px 3px 4px #989898;
+    -moz-box-shadow: -3px 3px 4px #989898;
+    box-shadow: -3px 3px 8px #989898;
+}
+/*****NOW THE SMALL CIRCLE***/
+/**Created exactly the same way as the large circle, except with smaller width, height and border-radius**/
+.bubble:after {
+    content:"";
+    position:absolute;
+    width:15px;
+    height:15px;
+    -webkit-border-radius:15px;
+    -moz-border-radius:15px;
+    border-radius:15px;
+    -webkit-box-shadow: -3px 3px 4px #989898;
+    -moz-box-shadow: -3px 3px 4px #989898;
+    box-shadow: -3px 3px 8px #989898;
+}
+
+.b1 {
+    top: 100px;
+    left: 470px;
+}
+
+.b2 {
+    top:3px;
+    left: 130px;
+}
+
+.b3 {
+    left:3px;
+}
+
+.b1 .bubble {
+    /**give the bubble's background a gradient**/
+    background:#FF554C; /*fallback colour for non-supporting browsers*/
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#FF726B), to(#E92F25));
+    background:-moz-linear-gradient(#FF726B, #E92F25);
+    background:-o-linear-gradient(#FF726B, #E92F25);
+    background:linear-gradient(#FF726B, #E92F25);
+}
+
+.b1 .bubble:before {
+    background:#FF554C;
+    bottom:-40px; /*distance from the bottom of the bubble*/
+    left:20px; /*distance from the left edge of the bubble*/
+    background:#E92F25;
+}
+
+.b1 .bubble:after {
+    background:#FF554C;
+    bottom:-55px;
+    left:0;
+    background:#E92F25;
+}
+
+.b2 .bubble {
+    /**give the bubble's background a gradient**/
+    background:#B2ED47; /*fallback colour for non-supporting browsers*/
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#C0F365), to(#97D822));
+    background:-moz-linear-gradient(#C0F365, #97D822);
+    background:-o-linear-gradient(#C0F365, #97D822);
+    background:linear-gradient(#C0F365, #97D822);
+}
+
+.b2 .bubble:before {
+    background:#B2ED47;
+    bottom: -44px;
+    right: 40px;
+}
+
+.b2 .bubble:after {
+    background:#B2ED47;
+    bottom: -74px;
+    right: 40px;;
+}
+
+.b3 .bubble {
+    /**give the bubble's background a gradient**/
+    background:#D9A700; /*fallback colour for non-supporting browsers*/
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#FFC500), to(#D99E00));
+    background:-moz-linear-gradient(#FFC500, #D99E00);
+    background:-o-linear-gradient(#FFC500, #D99E00);
+    background:linear-gradient(#FFC500, #D99E00);
+}
+
+.b3 .bubble:before {
+    background:#FFC500;
+    bottom:0px;
+    right:-40px; /*distance from the left edge of the bubble*/
+}
+
+.b3 .bubble:after {
+    background:#FFC500;
+    bottom: -1px;
+    right: -65px;
+}
+
+
+.menu img{
+    position: absolute;
+    left: 290px;
+    width:300px;
+}
