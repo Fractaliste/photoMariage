@@ -25,5 +25,7 @@ $app->register(new LoggerProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new RouteProvider());
 
+$app['session.storage.options'] = array('cookie_lifetime' => 60 * 60 * 12);
+
 $app->run();
 

@@ -35,7 +35,7 @@ a{
 }
 
 em {
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 h1 {
@@ -43,12 +43,68 @@ h1 {
     font-weight: bold;
 }
 
-button, input[type=submit] {
-    border:1px solid #45C255;
+h2 {
+    font-size: 1em;
+}
+
+.NFI-button, button {
+    -moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+    box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5));
+    background:-moz-linear-gradient(top, #79bbff 5%, #378de5 100%);
+    background:-webkit-linear-gradient(top, #79bbff 5%, #378de5 100%);
+    background:-o-linear-gradient(top, #79bbff 5%, #378de5 100%);
+    background:-ms-linear-gradient(top, #79bbff 5%, #378de5 100%);
+    background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5',GradientType=0);
+    background-color:#79bbff;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #84bbf3;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:2px 5px;
     text-decoration:none;
-    font-family:helvetica;
-    color:#45C255;
-    background:url(http://www.ngrl.org/images/backgrounds/gradient.jpg) repeat-x;}
+    text-shadow:0px 1px 0px #528ecc;
+}
+
+.NFI-button, button:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff));
+    background:-moz-linear-gradient(top, #378de5 5%, #79bbff 100%);
+    background:-webkit-linear-gradient(top, #378de5 5%, #79bbff 100%);
+    background:-o-linear-gradient(top, #378de5 5%, #79bbff 100%);
+    background:-ms-linear-gradient(top, #378de5 5%, #79bbff 100%);
+    background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff',GradientType=0);
+    background-color:#378de5;
+}
+
+.NFI-button, button:active {
+    position:relative;
+    top:1px;
+}
+
+.NFI-button, button:disabled {
+    cursor: not-allowed;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6E6E6E), color-stop(1, #ADADAD));
+    background:-moz-linear-gradient(top, #6E6E6E 5%, #ADADAD 100%);
+    background:-webkit-linear-gradient(top, #6E6E6E 5%, #ADADAD 100%);
+    background:-o-linear-gradient(top, #6E6E6E 5%, #ADADAD 100%);
+    background:-ms-linear-gradient(top, #6E6E6E 5%, #ADADAD 100%);
+    background:linear-gradient(to bottom, #6E6E6E 5%, #ADADAD 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6E6E6E', endColorstr='#ADADAD',GradientType=0);
+    background-color:#6E6E6E;
+    border:none;    
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+    box-shadow:none;
+}
 
 body > section {
     max-width: 900px;
@@ -238,49 +294,57 @@ a .bubble {
 
 
 
-.myButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
-	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5));
-	background:-moz-linear-gradient(top, #79bbff 5%, #378de5 100%);
-	background:-webkit-linear-gradient(top, #79bbff 5%, #378de5 100%);
-	background:-o-linear-gradient(top, #79bbff 5%, #378de5 100%);
-	background:-ms-linear-gradient(top, #79bbff 5%, #378de5 100%);
-	background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5',GradientType=0);
-	background-color:#79bbff;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #84bbf3;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:arial;
-	font-size:15px;
-	font-weight:bold;
-	/*padding:6px 24px;*/
-	text-decoration:none;
-	text-shadow:0px 1px 0px #528ecc;
-}
-.myButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff));
-	background:-moz-linear-gradient(top, #378de5 5%, #79bbff 100%);
-	background:-webkit-linear-gradient(top, #378de5 5%, #79bbff 100%);
-	background:-o-linear-gradient(top, #378de5 5%, #79bbff 100%);
-	background:-ms-linear-gradient(top, #378de5 5%, #79bbff 100%);
-	background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff',GradientType=0);
-	background-color:#378de5;
-}
-.myButton:active {
-	position:relative;
-	top:1px;
-}
 
 /* HOME */
 
 .menu a {
     cursor: default;
+}
+
+/* DEPOSER */
+
+#folder:-webkit-input-placeholder {
+    color: #FF554C;
+}
+
+#folder:-moz-placeholder {
+    color: #FF554C;
+}
+
+#liste {
+    display: none;
+    padding-left: 10px;
+}
+
+#liste ul li em {
+    color: #FF554C;
+}
+
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+}
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+#progress em {
+    margin-left: 10px;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+    .fileinput-button input {
+        filter: alpha(opacity=0);
+        font-size: 100%;
+        height: 100%;
+    }
 }
