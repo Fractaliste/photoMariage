@@ -22,12 +22,17 @@ class RouteProvider implements ServiceProviderInterface {
             return $app['twig']->render('home.twig');
         });
 
+        $app->get('/clear', function (Request $request) use ($app) {
+            $app['session']->clear();
+            return $app->redirect('/login');
+        });
+
         $app->get('/diaporama', function (Request $request) use ($app) {
-            return $app['twig']->render('diaporama.twig');
+            return $app['twig']->render('template.twig');
         });
 
         $app->get('/telecharger', function (Request $request) use ($app) {
-            return $app['twig']->render('telecharger.twig');
+            return $app['twig']->render('template.twig');
         });
 
         $app->get('/deposer', function (Request $request) use ($app) {
@@ -103,7 +108,8 @@ class RouteProvider implements ServiceProviderInterface {
         });
 
         $app->get('/login/erreur', function () use ($app) {
-            return $app['twig']->render('to_many_try.twig');
+            $t = ceil((15 * 60 - time() + $app['session']->get('last_try') ) / 60);
+            return $app['twig']->render('to_many_try.twig', ['minutes' => $t]);
         });
     }
 

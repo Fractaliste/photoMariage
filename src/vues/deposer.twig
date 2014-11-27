@@ -1,16 +1,39 @@
 {% extends "template.twig" %}
 
 {% block content %}
-    <div>
-        <form method="POST" enctype="multipart/form-data">
-            <label>Entrez ici le nom de votre album photo (votre prénom) dans lequel seront stockées vos photos<input type="input" value="" name="folder" required></label>
-            <br/>
-            <label>Sélectionnez ici vos photos :<input type="file" name="photos[]" accept="image/*" required multiple></label>
-            <br/>
-            <em>Merci de ne pas envoyer plus de 5 photos à la fois.</em>
-            <br/>
-            <input type="submit" value="Envoyer les photos">
-        </form>
-        {{img}}
+    <h1>Déposez ici vos photos</h1>
+    <div id="upload">
+        <p>
+            <label>Nom de l'album photo : 
+                <input type="input" value="" name="folder" id="folder" required>
+                <br/>
+                <em>Votre nom-prénom par exemple, cela permet d'organiser les photos sur le site</em>
+            </label>
+        </p>
+        <p>
+            <label id="fileupload">Sélectionnez ici vos photos : 
+                <button class="fileinput-button">
+                    Ajouter des photos à la liste d'envoi
+                    <input type="file" name="photos[]" accept=".jpg,.jpeg,.png,.zip" required multiple>
+                </button>
+                <br/>
+                <em>Formats autorisés : .jpg, .jpeg, .png. Vous pouvez également envoyer un .zip contenant les formats précédents.</em>
+            </label>
+        </p>
+        <div id="liste">
+            <h2>Liste des fichiers sélectionnés</h2>
+            <ul>
+            </ul>
+        </div>
+        <p>
+            <em>Pour éviter tout disfonctionnement du site nous vous recommandons de ne pas envoyer plus de 20 fichiers à la fois, et la taille maximale cumulée est de 40 Mo.</em>
+        </p>
+        <button id="submit" disabled>Envoyer les photos</button> <em>(<span id="nb_fichier">0</span>/20) fichiers sélectionnés, taille totale cumulée : <span id="taille_fichier">0</span> Mo</em>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/js/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="/js/jquery.fileupload.js"></script>
 {% endblock %}

@@ -10,11 +10,14 @@
             {% include 'header.twig' %}
             <article>
                 {% block content %}
+                    Cette page n'est pas encore disponible !
                 {% endblock %}
             </article>
         </section>
         <footer>
             <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>  
+            {% block js %}
+            {% endblock %}
             <script type="text/javascript" src="/js/main.js"></script>  
         </footer
     </body>
