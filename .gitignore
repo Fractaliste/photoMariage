@@ -1,4 +1,4 @@
 vendor
 web/img/mariage/*
-*.log
+src/temp/log/*
 composer.phar

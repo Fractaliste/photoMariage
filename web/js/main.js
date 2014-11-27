@@ -18,7 +18,8 @@ $('#fileupload').fileupload({
                 $("#liste ul").append("<li>" + v.name + "</li>");
             updateFileInfo(v);
         });
-        $("#submit").on("click", function () {
+        $("#submit").on("click", function (e) {
+            e.preventDefault();
             if ($("#folder").val() === '') {
                 $("#folder").attr("placeholder", "Ce champ est obligatoire !")
             } else {
@@ -39,7 +40,7 @@ $('#fileupload').fileupload({
     },
     progressall: function (e, data) {
         var progress = parseInt(data.loaded / data.total * 100, 10);
-        $("#progress em").html((data.loaded / 1048576).toFixed(2) + "/" + (data.total / 1048576).toFixed(2) + " (" + progress + "%)");
+        $("#progress em").html((data.loaded / 1048576).toFixed(2) + "/" + (data.total / 1048576).toFixed(2) + "Mo (" + progress + "%)");
     },
     done: function () {
         fileUploading--;

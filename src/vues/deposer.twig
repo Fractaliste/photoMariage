@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Déposez ici vos photos</h1>
-    <div id="upload">
+    <form id="upload">
         <p>
             <label>Nom de l'album photo : 
                 <input type="input" value="" name="folder" id="folder" required>
@@ -29,7 +29,7 @@
             <em>Pour éviter tout disfonctionnement du site nous vous recommandons de ne pas envoyer plus de 20 fichiers à la fois, et la taille maximale cumulée est de 40 Mo.</em>
         </p>
         <button id="submit" disabled>Envoyer les photos</button> <em>(<span id="nb_fichier">0</span>/20) fichiers sélectionnés, taille totale cumulée : <span id="taille_fichier">0</span> Mo</em>
-    </div>
+    </form>
 {% endblock %}
 
 {% block js %}
