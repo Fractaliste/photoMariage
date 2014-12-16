@@ -151,8 +151,8 @@ class RouteProvider implements ServiceProviderInterface {
 
         $app->get('/cron/test', function () use ($app) {
             $command = 'sh ' . __DIR__ . '/../cron.bash';
-            $r = exec($command);
-            return $command.'<br/>'.$r;
+            $r = exec($command, $out);
+            return $command.'<br/>'.$r.'<br/>'.  print_r($out, true);
         });
     }
 
