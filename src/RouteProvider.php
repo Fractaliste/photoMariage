@@ -148,6 +148,10 @@ class RouteProvider implements ServiceProviderInterface {
             $t = ceil((15 * 60 - time() + $app['session']->get('last_try') ) / 60);
             return $app['twig']->render('to_many_try.twig', ['minutes' => $t]);
         });
+
+        $app->get('/cron/test', function () use ($app) {
+            shell_exec('sh '.__DIR__.'/../cron.bash');
+        });
     }
 
     public function boot(Application $app) {
