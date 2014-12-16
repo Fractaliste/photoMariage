@@ -1,0 +1,16 @@
+{% extends "template.twig" %}
+
+{% block content %}
+    <h1>Diaporama</h1>
+    <section id="slideshow">
+        <div id="slide">
+            {% for item in urls %}
+                <img src="/img/mariage/{{item.url}}"/>
+            {% endfor %}  
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/jquery.slides.min.js"></script>
+{% endblock %}

@@ -5,6 +5,7 @@ namespace Raphdine;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -27,13 +28,43 @@ class RouteProvider implements ServiceProviderInterface {
             return $app->redirect('/login');
         });
 
-        $app->get('/diaporama', function (Request $request) use ($app) {
-            return $app['twig']->render('template.twig');
+        $app->get('/telecharger/{url}', function (Request $request, $url) use ($app) {
+            if (substr($url, -4) === '/all') {
+                $all = true;
+                $url = '';
+            } else {
+                $all = false;
+            }
+            $f = new FileManager($url, $all);
+            $z = $f->getZippedPath();
+            return $app->sendFile($z)->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'MariageRaphDine.zip');
         });
 
-        $app->get('/telecharger', function (Request $request) use ($app) {
-            return $app['twig']->render('template.twig');
+        $app->get('/telecharger/', function (Request $request) use ($app) {
+            $f = new FileManager('');
+            return $app['twig']->render('telecharger.twig', array(
+                        'f' => $f->afficherRepertoire()
+                        , 'path' => $f->getRelativePath()));
         });
+
+        $app->get('/diaporama/run/{url}', function (Request $request, $url) use ($app) {
+                    if (substr($url, -3) === 'all') {
+                        $all = true;
+                        $url = substr($url, null, count($url) - 4);
+                    } else {
+                        $all = false;
+                    }
+                    $o = new FileManager($url, $all);
+                    return $app['twig']->render('run.diaporama.twig', array('urls' => $o->getUrls()));
+                })
+                ->assert('url', '.*');
+
+        $app->get('/diaporama/{url}', function (Request $request, $url) use ($app) {
+            $f = new FileManager($url);
+            return $app['twig']->render('diaporama.twig', array(
+                        'f' => $f->afficherRepertoire()
+                        , 'path' => $f->getRelativePath()));
+        })->assert('url', '.*');
 
         $app->get('/deposer', function (Request $request) use ($app) {
             return $app['twig']->render('deposer.twig');
@@ -45,20 +76,22 @@ class RouteProvider implements ServiceProviderInterface {
             $error = array();
             foreach ($photos as $photo) {
                 $dir = $app['photo.dir'] . $request->request->get('folder') . '/';
-                $app['photo.save']($photo, $dir);
+                $error[] = $app['photo.save']($photo, $dir);
             }
             $filepath = print_r($dir, true);
             return $app['twig']->render('deposer.twig', ['img' => $filepath]);
         });
 
         $app['photo.save'] = $app->protect(function ($photo, $dir) use ($app ) {
-            $result = preg_match('#^(.*)(\.(jpg|jpeg|png))$#i', $photo->getClientOriginalName(), $matches);
+            $result = preg_match('#^(.*)(\.(jpg|jpeg|png|zip))$#i', $photo->getClientOriginalName(), $matches);
             if (!$result) {
                 if ($result === false) {
                     $app['logger']->addDebug('Problème de regex pour gérer le fichier : "' . $photo->getClientOriginalName() . '", l\'erreur retournée est : ' . preg_last_error());
                 } else {
-                    $error[] = 'Le fichier "' . $photo->getClientOriginalName() . '" n\'a pas pu être téléchargé, vérifiez qu\'il comporte bien une des extensions autorisées.';
+                    return 'Le fichier "' . $photo->getClientOriginalName() . '" n\'a pas pu être téléchargé, vérifiez qu\'il comporte bien une des extensions autorisées.';
                 }
+            } elseif (strtoupper($photo->getClientOriginalExtension()) === 'ZIP') {
+                $app['photo.save.zip']($photo, $dir);
             } else {
                 $originalFileName = ucwords(strtolower($matches[1]));
                 $fileName = $originalFileName;
@@ -68,6 +101,10 @@ class RouteProvider implements ServiceProviderInterface {
                 }
                 $photo->move($dir, $fileName . strtolower($matches[2]));
             }
+        });
+
+        $app['photo.save.zip'] = $app->protect(function ($zip, $dir) use ($app ) {
+            $app['logger']->addDebug('Fichier zip à sauvegarder');
         });
     }
 

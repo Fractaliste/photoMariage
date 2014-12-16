@@ -1,0 +1,20 @@
+{% extends "template.twig" %}
+
+{% block content %}
+    <h1>Télécharger</h1>
+    <em>Vous pouvez choisir de télécharger toutes les photos, ou bien sélectionnez un album en particulier.</em>
+    <section id="diaporama">
+        <a class="all" href="/telecharger/{{path}}all">
+            Tous les albums
+        </a>
+        {% for item in f.folders %}
+            <a class="album" href="/telecharger{{item.url}}">
+                <em>(Album)</em>
+                {{item.nom}}
+            </a>
+        {% endfor %}
+    </section>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "template.twig" %}
+
+{% block content %}
+    <h1>Diaporama</h1>
+    <em>Vous pouvez choisir de regarder toutes les photos, ou bien sélectionnez un album en particulier.</em>
+    <section id="diaporama">
+        <a class="all" href="/diaporama/run/{{path}}all">
+            Toutes les photos
+        </a>
+        {% for item in f.folders %}
+            <a class="album" href="/diaporama/{{item.url}}">
+                <em>(Album)</em>
+                {{item.nom}}
+            </a>
+        {% endfor %}
+        {% for item in f.files %}
+            <a class="image" href="/diaporama/run/{{item.directoryUrl}}">
+                <img src="/img/mariage/{{item.url}}"/>
+            </a>
+        {% endfor %}
+    </section>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
