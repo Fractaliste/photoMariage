@@ -81,13 +81,13 @@ class RouteProvider implements ServiceProviderInterface {
             }
             $filepath = print_r($dir, true);
             return $app['twig']->render('deposer.twig', ['img' => $filepath]);
-        })->after(function() {
+        })->after(function(Application $app) {
             $ironmq = new IronMQ(array(
                 'token' => '3GBSTtKvdWY-keZN0y7Wh2Tnp9M',
                 'project_id' => '54a134c35a03580007000055'
             ));
-        $a =     $ironmq->postMessage("mariage_zip_photo", array("Hello world!"));
-        print_r($a, true);
+            $a = $ironmq->postMessage("mariage_zip_photo", array("Hello world!"));
+            $app['logger']->debug($a);
         });
 
         $app['photo.save'] = $app->protect(function ($photo, $dir) use ($app ) {
