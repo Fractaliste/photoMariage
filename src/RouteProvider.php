@@ -7,6 +7,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -81,7 +82,8 @@ class RouteProvider implements ServiceProviderInterface {
             }
             $filepath = print_r($dir, true);
             return $app['twig']->render('deposer.twig', ['img' => $filepath]);
-        })->after(function(Application $app) {
+        })->after(function(Request $request, Response $response, Application $app) {
+            $app['logger']->addDebug('On souhaite lancer IronMQ');
             $ironmq = new IronMQ(array(
                 'token' => '3GBSTtKvdWY-keZN0y7Wh2Tnp9M',
                 'project_id' => '54a134c35a03580007000055'
