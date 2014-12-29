@@ -108,13 +108,12 @@ class RouteProvider implements ServiceProviderInterface {
                 }
                 $photo->move($dir, $fileName . strtolower($matches[2]));
             }
+        });
 
-
-            $app->match('/cron/zip', function () use ($app) {
-                $command = 'sh ' . __DIR__ . '/../cron.bash';
-                $r = exec($command, $out);
-                return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
-            });
+        $app->match('/cron/zip', function () use ($app) {
+            $command = 'sh ' . __DIR__ . '/../cron.bash';
+            $r = exec($command, $out);
+            return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
         });
 
         $app['photo.save.zip'] = $app->protect(function ($zip, $dir) use ($app ) {
