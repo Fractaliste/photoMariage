@@ -30,7 +30,7 @@ class RouteProvider implements ServiceProviderInterface {
         });
 
         $app->get('/telecharger/{url}', function (Request $request, $url) use ($app) {
-            if (substr($url, -4) === '/all') {
+            if ($url === 'all') {
                 $z = new File('../web/img/RaphDine.zip');
             } else {
                 $all = false;
@@ -149,7 +149,7 @@ class RouteProvider implements ServiceProviderInterface {
             return $app['twig']->render('to_many_try.twig', ['minutes' => $t]);
         });
 
-        $app->get('/cron/test', function () use ($app) {
+        $app->post('/cron/zip', function () use ($app) {
             $command = 'sh ' . __DIR__ . '/../cron.bash';
             $r = exec($command, $out);
             return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
