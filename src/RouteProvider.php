@@ -2,6 +2,7 @@
 
 namespace Raphdine;
 
+use IronMQ;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -80,6 +81,12 @@ class RouteProvider implements ServiceProviderInterface {
             }
             $filepath = print_r($dir, true);
             return $app['twig']->render('deposer.twig', ['img' => $filepath]);
+        })->after(function() {
+            $ironmq = new IronMQ(array(
+                'token' => '3GBSTtKvdWY-keZN0y7Wh2Tnp9M',
+                'project_id' => '54a134c35a03580007000055'
+            ));
+            $ironmq->postMessage("mariage_zip_photo", array());
         });
 
         $app['photo.save'] = $app->protect(function ($photo, $dir) use ($app ) {
@@ -101,6 +108,13 @@ class RouteProvider implements ServiceProviderInterface {
                 }
                 $photo->move($dir, $fileName . strtolower($matches[2]));
             }
+
+
+            $app->match('/cron/zip', function () use ($app) {
+                $command = 'sh ' . __DIR__ . '/../cron.bash';
+                $r = exec($command, $out);
+                return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
+            });
         });
 
         $app['photo.save.zip'] = $app->protect(function ($zip, $dir) use ($app ) {
@@ -147,12 +161,6 @@ class RouteProvider implements ServiceProviderInterface {
         $app->get('/login/erreur', function () use ($app) {
             $t = ceil((15 * 60 - time() + $app['session']->get('last_try') ) / 60);
             return $app['twig']->render('to_many_try.twig', ['minutes' => $t]);
-        });
-
-        $app->post('/cron/zip', function () use ($app) {
-            $command = 'sh ' . __DIR__ . '/../cron.bash';
-            $r = exec($command, $out);
-            return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
         });
     }
 
