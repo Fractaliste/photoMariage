@@ -87,7 +87,7 @@ class RouteProvider implements ServiceProviderInterface {
                 'project_id' => '54a134c35a03580007000055'
             ));
             $a = $ironmq->postMessage("mariage_zip_photo", array("Hello world!"));
-            $app['logger']->debug($a);
+            $app['logger']->addDebug($a);
         });
 
         $app['photo.save'] = $app->protect(function ($photo, $dir) use ($app ) {
@@ -112,8 +112,11 @@ class RouteProvider implements ServiceProviderInterface {
         });
 
         $app->match('/cron/zip', function () use ($app) {
+            $app['logger']->addDebug('Lancement du cron');
+
             $command = 'sh ' . __DIR__ . '/../cron.bash';
             $r = exec($command, $out);
+            $app['logger']->addDebug('Fin du cron');
             return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
         });
 
