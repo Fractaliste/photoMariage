@@ -4,6 +4,7 @@ namespace Raphdine;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -30,13 +31,12 @@ class RouteProvider implements ServiceProviderInterface {
 
         $app->get('/telecharger/{url}', function (Request $request, $url) use ($app) {
             if (substr($url, -4) === '/all') {
-                $all = true;
-                $url = '';
+                $z = new File('../web/img/RaphDine.zip');
             } else {
                 $all = false;
+                $f = new FileManager($url, $all);
+                $z = $f->getZippedPath();
             }
-            $f = new FileManager($url, $all);
-            $z = $f->getZippedPath();
             return $app->sendFile($z)->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'MariageRaphDine.zip');
         });
 
@@ -152,7 +152,7 @@ class RouteProvider implements ServiceProviderInterface {
         $app->get('/cron/test', function () use ($app) {
             $command = 'sh ' . __DIR__ . '/../cron.bash';
             $r = exec($command, $out);
-            return $command.'<br/>'.$r.'<br/>'.  print_r($out, true);
+            return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
         });
     }
 
