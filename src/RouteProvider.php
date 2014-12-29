@@ -118,7 +118,7 @@ class RouteProvider implements ServiceProviderInterface {
 
             $command = 'sh ' . __DIR__ . '/../cron.bash';
             $r = exec($command, $out);
-            $app['logger']->addDebug('Fin du cron');
+            $app['logger']->addDebug('Fin du cron : ' . print_r($out, true));
             return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
         });
 
