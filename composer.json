@@ -10,7 +10,8 @@
     "require": {
         "silex/silex": "v1.2.2",
         "twig/twig": "v1.16.2",
-        "monolog/monolog": "1.11.0"
+        "monolog/monolog": "1.11.0",
+        "iron-io/iron_mq": "1.5.2"
     },
     "autoload": {
         "psr-4": {
