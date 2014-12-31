@@ -38,13 +38,6 @@ class FileManager {
         return $this->files;
     }
 
-    public function getZippedPath() {
-        $temp_file = tempnam(sys_get_temp_dir(), 'Tux');
-        $manager = new ZipManager();
-        $manager->zipDir(realpath($this->realDir), $temp_file);
-        return $temp_file;
-    }
-
     public function getRelativePath() {
         return $this->relativeDir;
     }

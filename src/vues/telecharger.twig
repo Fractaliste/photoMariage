@@ -2,11 +2,8 @@
 
 {% block content %}
     <h1>Télécharger</h1>
-    <em>Vous pouvez choisir de télécharger toutes les photos, ou bien sélectionnez un album en particulier.</em>
-    <section id="diaporama">
-        <a class="all" href="/img/RaphDine.zip">
-            Tous les albums
-        </a>
+    <em>Cliquez sur l'album que vous souhaitez télécharger</em>
+    <section id="tuile">
         {% for item in f.folders %}
             <a class="album" href="/img/zip/{{item.nom}}.zip">
                 <em>(Album)</em>

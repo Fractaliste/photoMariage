@@ -29,17 +29,6 @@ class RouteProvider implements ServiceProviderInterface {
             return $app->redirect('/login');
         });
 
-//        $app->get('/telecharger/{url}', function (Request $request, $url) use ($app) {
-//            if ($url === 'all') {
-//                $z = new File('../web/img/RaphDine.zip');
-//            } else {
-//                $all = false;
-//                $f = new FileManager($url, $all);
-//                $z = $f->getZippedPath();
-//            }
-//            return $app->sendFile($z)->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'MariageRaphDine.zip');
-//        });
-
         $app->get('/telecharger/', function (Request $request) use ($app) {
             $f = new FileManager('');
             return $app['twig']->render('telecharger.twig', array(
