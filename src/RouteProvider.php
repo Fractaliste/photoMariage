@@ -88,7 +88,7 @@ class RouteProvider implements ServiceProviderInterface {
                 'token' => '3GBSTtKvdWY-keZN0y7Wh2Tnp9M',
                 'project_id' => '54a134c35a03580007000055'
             ));
-            $a = $ironmq->postMessage("mariage_zip_photo", array("Hello world!"));
+            $a = $ironmq->postMessage("mariage_zip_photo", array('dir' => $request->request->get('folder')));
             $app['logger']->addDebug($a);
         });
 
