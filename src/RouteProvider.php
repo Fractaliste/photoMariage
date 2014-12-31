@@ -111,7 +111,7 @@ class RouteProvider implements ServiceProviderInterface {
             }
         });
 
-        $app->get('/cron/zip', function (Request $request) use ($app) {
+        $app->post('/cron/zip', function (Request $request) use ($app) {
             $app['logger']->addDebug('Lancement du cron');
 
             $ironmq = new IronMQ(array(
