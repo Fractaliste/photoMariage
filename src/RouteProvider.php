@@ -86,7 +86,7 @@ class RouteProvider implements ServiceProviderInterface {
                 'token' => '3GBSTtKvdWY-keZN0y7Wh2Tnp9M',
                 'project_id' => '54a134c35a03580007000055'
             ));
-            $app['logger']->addDebug($request->get('folder'));
+            $app['logger']->addDebug('Folder => '.$request->get('folder'));
             $ironmq->postMessage("mariage_zip_photo", array('dir' => $request->get('folder')));
         });
 
@@ -111,9 +111,9 @@ class RouteProvider implements ServiceProviderInterface {
             }
         });
 
-        $app->post('/cron/zip', function (Request $request) use ($app) {
+        $app->get('/cron/zip', function (Request $request) use ($app) {
             $app['logger']->addDebug('Lancement du cron');
-            $app['logger']->addDebug($request->get('dir'));
+            $app['logger']->addDebug('params => '.print_r($request->request->all(), true));
 
             $command = 'sh ' . __DIR__ . '/../cron.bash';
             $r = exec($command, $out);
