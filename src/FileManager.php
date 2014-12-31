@@ -28,13 +28,13 @@ class FileManager {
         $this->realDir .= $this->relativeDir;
     }
 
-    public function afficherRepertoire() {
-        $this->parseDir();
+    public function afficherRepertoire($all = true) {
+        $this->parseDir($all);
         return array('folders' => $this->folders, 'files' => $this->files);
     }
 
-    public function getUrls() {
-        $this->parseDir(false);
+    public function getUrls($all = true) {
+        $this->parseDir($all);
         return $this->files;
     }
 
@@ -45,7 +45,7 @@ class FileManager {
     private function parseDir($all = true) {
         $fileList = array_diff(scandir($this->realDir), array('..', '.'));
         foreach ($fileList as $item) {
-            if (strpos($item, '(HD') && !$all) {
+            if (strpos($item, '(HD') && $all === false) {
                 continue;
             }
 

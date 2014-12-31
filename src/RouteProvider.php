@@ -44,14 +44,14 @@ class RouteProvider implements ServiceProviderInterface {
                         $all = false;
                     }
                     $o = new FileManager($url, $all);
-                    return $app['twig']->render('run.diaporama.twig', array('urls' => $o->getUrls()));
+                    return $app['twig']->render('run.diaporama.twig', array('urls' => $o->getUrls(false)));
                 })
                 ->assert('url', '.*');
 
         $app->get('/diaporama/{url}', function (Request $request, $url) use ($app) {
             $f = new FileManager($url);
             return $app['twig']->render('diaporama.twig', array(
-                        'f' => $f->afficherRepertoire()
+                        'f' => $f->afficherRepertoire(false)
                         , 'path' => $f->getRelativePath()));
         })->assert('url', '.*');
 
