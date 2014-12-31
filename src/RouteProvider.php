@@ -5,10 +5,8 @@ namespace Raphdine;
 use IronMQ;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -88,8 +86,8 @@ class RouteProvider implements ServiceProviderInterface {
                 'token' => '3GBSTtKvdWY-keZN0y7Wh2Tnp9M',
                 'project_id' => '54a134c35a03580007000055'
             ));
-            $a = $ironmq->postMessage("mariage_zip_photo", array('dir' => $request->request->get('folder')));
-            $app['logger']->addDebug($a);
+            $app['logger']->addDebug($request->get('folder'));
+            $ironmq->postMessage("mariage_zip_photo", array('dir' => $request->get('folder')));
         });
 
         $app['photo.save'] = $app->protect(function ($photo, $dir) use ($app ) {
@@ -113,8 +111,9 @@ class RouteProvider implements ServiceProviderInterface {
             }
         });
 
-        $app->match('/cron/zip', function () use ($app) {
+        $app->post('/cron/zip', function (Request $request) use ($app) {
             $app['logger']->addDebug('Lancement du cron');
+            $app['logger']->addDebug($request->get('dir'));
 
             $command = 'sh ' . __DIR__ . '/../cron.bash';
             $r = exec($command, $out);
