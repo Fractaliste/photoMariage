@@ -87,7 +87,24 @@ class RouteProvider implements ServiceProviderInterface {
                 'project_id' => '54a134c35a03580007000055'
             ));
             $app['logger']->addDebug('Folder => ' . $request->get('folder'));
-            $ironmq->postMessage("mariage_zip_photo", array('dir' => $request->get('folder')));
+            $ironmq->postMessage("mariage_zip_photo", $request->get('folder'));
+        });
+
+        $app->post('/cron/zip', function (Request $request) use ($app) {
+            $app['logger']->addDebug('Lancement du cron');
+
+            $ironmq = new IronMQ(array(
+                'token' => '3GBSTtKvdWY-keZN0y7Wh2Tnp9M',
+                'project_id' => '54a134c35a03580007000055'
+            ));
+            $message = $ironmq->getMessagePushStatuses('mariage_zip_photo');
+            $app['logger']->addDebug('params => ' . $message);
+            $app['logger']->addDebug('params => ' . $request->getContent());
+
+            $command = 'sh ' . __DIR__ . '/../cron.bash';
+            $r = exec($command, $out);
+            $app['logger']->addDebug('Fin du cron : ' . print_r($out, true));
+            return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
         });
 
         $app['photo.save'] = $app->protect(function ($photo, $dir) use ($app ) {
@@ -111,21 +128,6 @@ class RouteProvider implements ServiceProviderInterface {
             }
         });
 
-        $app->post('/cron/zip', function (Request $request) use ($app) {
-            $app['logger']->addDebug('Lancement du cron');
-
-            $ironmq = new IronMQ(array(
-                'token' => '3GBSTtKvdWY-keZN0y7Wh2Tnp9M',
-                'project_id' => '54a134c35a03580007000055'
-            ));
-            $message = $ironmq->getMessage('mariage_zip_photo');
-            $app['logger']->addDebug('params => ' . $message);
-
-            $command = 'sh ' . __DIR__ . '/../cron.bash';
-            $r = exec($command, $out);
-            $app['logger']->addDebug('Fin du cron : ' . print_r($out, true));
-            return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
-        });
 
         $app['photo.save.zip'] = $app->protect(function ($zip, $dir) use ($app ) {
             $app['logger']->addDebug('Fichier zip à sauvegarder');
