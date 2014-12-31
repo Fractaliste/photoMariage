@@ -34,7 +34,7 @@ class FileManager {
     }
 
     public function getUrls() {
-        $this->parseDir();
+        $this->parseDir(false);
         return $this->files;
     }
 
@@ -42,9 +42,13 @@ class FileManager {
         return $this->relativeDir;
     }
 
-    private function parseDir() {
+    private function parseDir($all = true) {
         $fileList = array_diff(scandir($this->realDir), array('..', '.'));
         foreach ($fileList as $item) {
+            if (strpos($item, '(HD') && !$all) {
+                continue;
+            }
+
             if (is_dir($this->realDir . '/' . $item)) {
                 $this->folders[] = array('url' => $this->relativeDir . $item, 'nom' => $item);
                 if ($this->recursive) {
