@@ -10,9 +10,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = new Application();
 
-$app['debug'] = function() use ($app) {
+$app['debug'] = $app->share(function() use ($app) {
     return $app['request_context']->getHost() === 'localhost';
-};
+});
 
 $app['photo.dir'] = __DIR__ . '/img/mariage/';
 $app['photo.password'] = '06122014';
