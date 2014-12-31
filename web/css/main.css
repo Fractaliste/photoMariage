@@ -348,6 +348,7 @@ a .bubble {
 
 #tuile a {
     margin-right: 7px;
+    margin-bottom: 7px;
     text-align: center;
     border: 1px solid black;
     float: left;
