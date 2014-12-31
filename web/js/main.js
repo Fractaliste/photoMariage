@@ -47,6 +47,7 @@ if ($('#fileupload').length > 0)
             fileUploading--;
             if (fileUploading === 0) {
                 $("#upload").parent().append("<p>C'est terminé ! Pour envoyer de nouvelles photos actualisez la page (F5).</p>");
+                $("#upload").parent().append("<p>Les photos seront disponible au téléchargement d'ici quelques minutes...</p>");
                 $("#upload").parent().append("<p>Pour accéder au menu principal c'est <a href=\"/\">ICI</a></p>");
 
             }
