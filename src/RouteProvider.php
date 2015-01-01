@@ -83,7 +83,21 @@ class RouteProvider implements ServiceProviderInterface {
             $app['logger']->addDebug('Lancement du cron');
             $app['logger']->addDebug('params => ' . $request->getContent());
 
-            $command = 'sh ' . __DIR__ . '/../cron.bash "' . $request->getContent() . '"';
+            $command = 'sh ' . __DIR__ . '/../zip.bash "' . $request->getContent() . '"';
+            $r = exec($command, $out);
+            $app['logger']->addDebug('Fin du cron : ' . print_r($out, true));
+            return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
+        });
+        
+        $app->post('/cron/rezise', function (Request $request) use ($app) {
+            $command = 'sh ' . __DIR__ . '/../resize.bash' ;
+            $r = exec($command, $out);
+            $app['logger']->addDebug('Fin du cron : ' . print_r($out, true));
+            return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
+        });
+        
+        $app->post('/cron/thumbnail', function (Request $request) use ($app) {
+            $command = 'sh ' . __DIR__ . '/../thumbnail.bash' ;
             $r = exec($command, $out);
             $app['logger']->addDebug('Fin du cron : ' . print_r($out, true));
             return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
