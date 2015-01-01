@@ -89,7 +89,7 @@ class RouteProvider implements ServiceProviderInterface {
             return $command . '<br/>' . $r . '<br/>' . print_r($out, true);
         });
         
-        $app->post('/cron/rezise', function (Request $request) use ($app) {
+        $app->post('/cron/resize', function (Request $request) use ($app) {
             $command = 'sh ' . __DIR__ . '/../resize.bash' ;
             $r = exec($command, $out);
             $app['logger']->addDebug('Fin du cron : ' . print_r($out, true));
