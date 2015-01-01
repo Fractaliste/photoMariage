@@ -141,7 +141,7 @@ class RouteProvider implements ServiceProviderInterface {
                 }
             }
 
-            if (!in_array($request->getRequestUri(), ['/login', '/login/erreur', '/cron/zip']) && $app['session']->get('password') !== 'ok') {
+            if (!in_array($request->getRequestUri(), ['/login', '/login/erreur', '/cron/zip', '/cron/resize', '/cron/thumbnail']) && $app['session']->get('password') !== 'ok') {
                 return $app->redirect('/login');
             }
         });
